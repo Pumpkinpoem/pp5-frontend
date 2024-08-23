@@ -32,11 +32,30 @@
   width: 100%;
 }
 
-.Blue,
-.BlueOutline:hover,
+.Pink,
+.PinkOutline:hover,
 .Bright:hover {
   background-color: #fa7291;
   color: #ffffff;
+}
+
+
+.PinkOutline,
+.Pink:hover {
+  background-color: #ffffff;
+  color: #fa7291;
+}
+
+.Black,
+.BlackOutline:hover {
+  background-color: #3f1e25;
+  color: #ebb2be;
+}
+
+.Black:hover,
+.BlackOutline {
+  background-color: #ebb2be;
+  color: #3f1e25;
 }
 
 
