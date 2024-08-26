@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import Portrait from "../../assets/Portrait_Perfect.jpg";
 import { Form, Button, Image, Col, Row, Container } from "react-bootstrap";
 import axios from "axios";
-
 
 const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState({
@@ -31,10 +30,10 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/registration/", signUpData);
+      await axios.post("dj-rest-auth/registration/", signUpData);
       history.push("/signin");
     } catch (err) {
-      console.log("errors = ", err)
+      console.log("errors = ", err);
       setErrors(err.response?.data);
     }
   };
@@ -57,7 +56,7 @@ const SignUpForm = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors.username?.map((message, idx) => (
+            {errors?.username?.map((message, idx) => (
               <Alert variant="warning" key={idx}>
                 {message}
               </Alert>
@@ -74,7 +73,7 @@ const SignUpForm = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors.password1?.map((message, idx) => (
+            {errors?.password1?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
               </Alert>
@@ -91,7 +90,7 @@ const SignUpForm = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            {errors.password2?.map((message, idx) => (
+            {errors?.password2?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
               </Alert>
@@ -103,7 +102,7 @@ const SignUpForm = () => {
             >
               Sign up
             </Button>
-            {errors.non_field_errors?.map((message, idx) => (
+            {errors?.non_field_errors?.map((message, idx) => (
               <Alert key={idx} variant="warning" className="mt-3">
                 {message}
               </Alert>
@@ -121,10 +120,7 @@ const SignUpForm = () => {
         md={6}
         className={`my-auto d-none d-md-block p-2 ${styles.SignUpCol}`}
       >
-        <Image
-          className={`${appStyles.FillerImage}`}
-          src={Portrait}
-        />
+        <Image className={`${appStyles.FillerImage}`} src={Portrait} />
       </Col>
     </Row>
   );

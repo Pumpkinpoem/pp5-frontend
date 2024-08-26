@@ -29,16 +29,22 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const {data} = await axios.post("/dj-rest-auth/login/", signInData);
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       history.push("/");
     } catch (err) {
-      setErrors(err.response?.data);
+      if (err.response?.data) {
+        setErrors(err.response.data);
+      } else {
+        setErrors({ non_field_errors: ["Something went wrong. Please try again."] });
+      }
     }
   };
+
   const handleChange = (event) => {
     setSignInData({
       ...signInData,
