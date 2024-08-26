@@ -4,7 +4,7 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
-import { axiosRes } from "../../api/axiosDefaults";
+import { axiosRes, axiosReq } from "../../api/axiosDefaults";
 
 const Post = (props) => {
   const {
@@ -28,17 +28,9 @@ const Post = (props) => {
 
   const handleLike = async () => {
     try {
-      const { data } = await axiosRes.post("/likes/", { post: id });
-      setPosts((prevPosts) => ({
-        ...prevPosts,
-        results: prevPosts.results.map((post) => {
-          if (post.id === id) {
-            const updatedLikesCount = post.likes_count ? post.likes_count + 1 : 1;
-            return { ...post, likes_count: updatedLikesCount, like_id: data.id };
-          }
-          return post;
-        }),
-      }));
+      await axiosRes.post("/likes/", { post: id });
+      const { data: post } = await axiosReq.get(`/posts/${id}`);
+      setPosts({ results: [post] });
     } catch (err) {
       console.log(err);
     }
@@ -47,20 +39,13 @@ const Post = (props) => {
   const handleUnlike = async () => {
     try {
       await axiosRes.delete(`/likes/${like_id}/`);
-      setPosts((prevPosts) => ({
-        ...prevPosts,
-        results: prevPosts.results.map((post) => {
-          if (post.id === id) {
-            const updatedLikesCount = post.likes_count ? post.likes_count - 1 : 0;
-            return { ...post, likes_count: updatedLikesCount, like_id: null };
-          }
-          return post;
-        }),
-      }));
+      const { data: post } = await axiosReq.get(`/posts/${id}`);
+      setPosts({ results: [post] });
     } catch (err) {
       console.log(err);
     }
   };
+  
   
   return (
     <Card className={styles.Post}>
