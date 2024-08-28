@@ -14,15 +14,14 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
-import { fetchMoreData } from "../../utils/utils";
-
+import { fetchMoreData } from "../../utils/utils";  // Make sure you're importing it correctly
 
 function PostPage() {
   const { id } = useParams();
   const [post, setPost] = useState({ results: [] });
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
-  const [comments, setComments] = useState({ results: [] });
+  const [comments, setComments] = useState({ results: [], next: null });
 
   useEffect(() => {
     const handleMount = async () => {
@@ -60,7 +59,12 @@ function PostPage() {
           ) : null}
           {comments.results.length ? (
             <InfiniteScroll
-              children={comments.results.map((comment) => (
+              dataLength={comments.results.length}
+              next={() => fetchMoreData(comments, setComments)}  // Correct usage here
+              hasMore={!!comments.next} 
+              loader={<Asset spinner />}
+            >
+              {comments.results.map((comment) => (
                 <Comment
                   key={comment.id}
                   {...comment}
@@ -68,11 +72,7 @@ function PostPage() {
                   setComments={setComments}
                 />
               ))}
-              dataLength={comments.results.length}
-              loader={<Asset spinner />}
-              hasMore={!!comments.next}
-              next={() => fetchMoreData(comments, setComments)}
-            />
+            </InfiniteScroll>
           ) : currentUser ? (
             <span>No Comments Here Yet! But You Can Be The First!</span>
           ) : (
