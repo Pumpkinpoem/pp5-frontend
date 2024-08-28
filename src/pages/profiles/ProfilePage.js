@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { Button, Image } from "react-bootstrap";
-
 import Asset from "../../components/Asset";
 import PopularProfiles from "./PopularProfiles";
 import styles from "../../styles/ProfilePage.module.css";
@@ -18,6 +16,10 @@ import {
   useProfileData,
   useSetProfileData,
 } from "../../contexts/ProfileDataContext";
+import InfiniteScroll from "react-infinite-scroll-component";
+import NoResults from "../../assets/no_results.png";
+import { fetchMoreData } from "../../utils/utils";
+import Post from "../posts/Post"
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -25,19 +27,22 @@ function ProfilePage() {
   const { id } = useParams();
   const setProfileData = useSetProfileData();
   const { pageProfile } = useProfileData();
-  const [profile] = pageProfile?.results;
+  const [profile] = pageProfile?.results || [];
+  const [profilePosts, setProfilePosts] = useState({ results: [] });
   const is_owner = currentUser?.username === profile?.owner;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }] = await Promise.all([
+        const [{ data: pageProfile }, { data: profilePosts }] = await Promise.all([
           axiosReq.get(`/profiles/${id}/`),
+          axiosReq.get(`/posts/?owner__profile=${id}`),
         ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
+        setProfilePosts(profilePosts);
         setHasLoaded(true);
       } catch (err) {
         console.log(err);
@@ -60,23 +65,22 @@ function ProfilePage() {
           <h3 className="m-2">{profile?.owner}</h3>
           <Row className="justify-content-center no-gutters">
             <Col xs={3} className="my-2">
-              <div>{profile?.posts_count}</div>
+              <div>{profile?.posts_count ?? 0}</div>
               <div>Posts</div>
             </Col>
             <Col xs={3} className="my-2">
-              <div>{profile?.followers_count}</div>
+              <div>{profile?.followers_count ?? 0}</div>
               <div>Followers</div>
             </Col>
             <Col xs={3} className="my-2">
-              <div>{profile?.following_count}</div>
+              <div>{profile?.following_count ?? 0}</div>
               <div>Following</div>
             </Col>
           </Row>
         </Col>
         <Col lg={3} className="text-lg-right">
-          {currentUser &&
-            !is_owner &&
-            (profile?.following_id ? (
+          {currentUser && !is_owner && (
+            profile?.following_id ? (
               <Button
                 className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
                 onClick={() => {}}
@@ -90,9 +94,12 @@ function ProfilePage() {
               >
                 Follow
               </Button>
-            ))}
+            )
+          )}
         </Col>
-        { profile?.content && (<Col className="p-3">{profile.content}</Col> )}
+        {profile?.content && (
+          <Col className="p-3">{profile.content}</Col>
+        )}
       </Row>
     </>
   );
@@ -100,8 +107,25 @@ function ProfilePage() {
   const mainProfilePosts = (
     <>
       <hr />
-      <p className="text-center">Profile owner's posts</p>
+      <p className="text-center">{profile?.owner}'s posts</p>
       <hr />
+      {profilePosts.results.length ? (
+        <InfiniteScroll
+          dataLength={profilePosts.results.length}
+          next={() => fetchMoreData(profilePosts, setProfilePosts)}
+          hasMore={!!profilePosts.next}
+          loader={<Asset spinner />}
+        >
+          {profilePosts.results.map((post) => (
+            <Post key={post.id} {...post} setPosts={setProfilePosts} />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <Asset
+          src={NoResults}
+          message={`No results found, ${profile?.owner} hasn't posted yet.`}
+        />
+      )}
     </>
   );
 
