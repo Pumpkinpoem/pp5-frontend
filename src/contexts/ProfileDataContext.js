@@ -3,13 +3,15 @@ import { axiosReq } from "../api/axiosDefaults";
 import { useCurrentUser } from "./CurrentUserContext";
 import React from "react";
 
-
+// Creating contexts
 export const ProfileDataContext = createContext();
 export const SetProfileDataContext = createContext();
 
+// Custom hooks to use the contexts
 export const useProfileData = () => useContext(ProfileDataContext);
 export const useSetProfileData = () => useContext(SetProfileDataContext);
 
+// ProfileDataProvider component
 export const ProfileDataProvider = ({ children }) => {
     const [profileData, setProfileData] = useState({
         pageProfile: { results: [] },
