@@ -19,25 +19,29 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import NoResults from "../../assets/no_results.png";
 import { fetchMoreData } from "../../utils/utils";
-import Post from "../posts/Post"
+import Post from "../posts/Post";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const currentUser = useCurrentUser();
+
   const { id } = useParams();
-  const setProfileData = useSetProfileData();
+  const { setProfileData, handleFollow } = useSetProfileData();
+
   const { pageProfile } = useProfileData();
   const [profile] = pageProfile?.results || [];
+
   const [profilePosts, setProfilePosts] = useState({ results: [] });
   const is_owner = currentUser?.username === profile?.owner;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }, { data: profilePosts }] = await Promise.all([
-          axiosReq.get(`/profiles/${id}/`),
-          axiosReq.get(`/posts/?owner__profile=${id}`),
-        ]);
+        const [{ data: pageProfile }, { data: profilePosts }] =
+          await Promise.all([
+            axiosReq.get(`/profiles/${id}/`),
+            axiosReq.get(`/posts/?owner__profile=${id}`),
+          ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
@@ -79,8 +83,9 @@ function ProfilePage() {
           </Row>
         </Col>
         <Col lg={3} className="text-lg-right">
-          {currentUser && !is_owner && (
-            profile?.following_id ? (
+          {currentUser &&
+            !is_owner &&
+            (profile?.following_id ? (
               <Button
                 className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
                 onClick={() => {}}
@@ -90,16 +95,13 @@ function ProfilePage() {
             ) : (
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Black}`}
-                onClick={() => {}}
+                onClick={() => handleFollow(profile)}
               >
                 Follow
               </Button>
-            )
-          )}
+            ))}
         </Col>
-        {profile?.content && (
-          <Col className="p-3">{profile.content}</Col>
-        )}
+        {profile?.content && <Col className="p-3">{profile.content}</Col>}
       </Row>
     </>
   );
