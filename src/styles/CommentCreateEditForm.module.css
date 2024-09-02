@@ -1,12 +1,12 @@
 .Form {
   border: none;
-  border-bottom: 2px #F19C79 solid; /* Atomic Tangerine for a warm, inviting underline */
+  border-bottom: 2px #F19C79 solid; /* Peachy Coral */
 }
 
 .Button {
   border: none;
-  background-color: #A44A3F; /* Chestnut for a rich, warm background */
-  color: #F6F4D2; /* Light Yellow for text */
+  background-color: #A44A3F; /* Chestnut */
+  color: #F6F4D2; /* Soft Buttercream */
   border-radius: 100px;
   padding: 4px 10px;
   min-width: 75px;
@@ -15,6 +15,6 @@
 
 .Button:hover {
   cursor: pointer;
-  background-color: #F6F4D2; /* Light Yellow for a softer hover background */
-  color: #A44A3F; /* Chestnut for text on hover */
+  background-color: #F6F4D2; /* Soft Buttercream */
+  color: #A44A3F; /* Chestnut */
 }

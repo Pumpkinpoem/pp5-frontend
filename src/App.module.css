@@ -1,6 +1,6 @@
 .App {
   font-family: "Noto Serif", sans-serif;
-  background-color: #cbdfbd; /* Tea Green for a calm background */
+  background-color: #cbdfbd; /* Light Moss Green for a calm background */
   min-height: 100vh;
 }
 
@@ -9,11 +9,13 @@
 }
 
 .Content {
-  background-color: #cbdfbd; /* Tea Green for content background */
+  background-color: #cbdfbd; /* Light Moss Green for content background */
   padding: 10px;
   border-radius: 2px;
-  border: 2px solid #f6f4d2; /* Vanilla for the border */
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  border: 2px solid #f6f4d2; /* Soft Buttercream for the border */
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 
 .FillerImage {
@@ -26,12 +28,6 @@
   max-height: 40vh;
   max-width: 100%;
   object-fit: contain;
-  box-shadow: 
-rgba(0, 0, 0, 0.25) 0px 54px 55px,
-rgba(0, 0, 0, 0.12) 0px -12px 30px,
-rgba(0, 0, 0, 0.12) 0px 4px 6px,
-rgba(0, 0, 0, 0.17) 0px 12px 13px,
-rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 * {
@@ -48,12 +44,12 @@ a:hover {
 }
 
 a:hover i {
-  color: #f19c79; /* Atomic Tangerine for icon hover color */
+  color: #f19c79; /* Peachy Coral for icon hover color */
   transition: color ease-in-out 0.3s;
 }
 
 i {
-  color: #f6f4d2; /* Vanilla for icon color */
+  color: #f6f4d2; /* Soft Buttercream for icon color */
   font-size: 1.6rem;
   padding: 7px;
   vertical-align: middle;
@@ -62,7 +58,7 @@ i {
 i:hover {
   cursor: pointer;
   transition: color ease-in-out 0.3s;
-  color: #f19c79; /* Atomic Tangerine for hover */
+  color: #f19c79; /* Peachy Cora for hover */
 }
 
 figure {
@@ -81,5 +77,5 @@ figure {
   background: #a44a3f; /* Chestnut for scrollbar thumb */
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: #f19c79; /* Atomic Tangerine on hover */
+  background: #f19c79; /* Peachy Cora on hover */
 }

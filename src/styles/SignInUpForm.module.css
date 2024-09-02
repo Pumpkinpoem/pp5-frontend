@@ -3,8 +3,8 @@
 }
 
 .Input {
-  background: #CBDFBD; /* Tea Green for a calming background */
-  border: 1px solid #D4E09B; /* Vanilla for a soft border */
+  background: #CBDFBD; /* Light Moss Green  */
+  border: 1px solid #D4E09B; /* Soft Buttercream  */
   box-sizing: border-box;
   border-radius: 2px;
   color: #A44A3F; /* Chestnut for text color */
@@ -20,7 +20,7 @@
   text-align: center;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #F19C79; /* Atomic Tangerine for a warm, inviting header color */
+  color: #F19C79; /* Peachy Coral */
 }
 
 .Link {
@@ -31,12 +31,12 @@
 }
 
 .Link span {
-  color: #F19C79; /* Atomic Tangerine for link text */
+  color: #F19C79; /* Peachy Coral */
 }
 
 .Container {
   padding: 30px 10px;
-  background-color: #F19C79; /* Atomic Tangerine for a vibrant container background */
+  background-color: #F19C79; /* Peachy Coral */
 }
 
 .SignInCol {
