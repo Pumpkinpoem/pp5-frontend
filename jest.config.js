@@ -1,10 +1,9 @@
 module.exports = {
-    transformIgnorePatterns: [
-      "/node_modules/(?!axios/)" // This tells Jest to transform axios
-    ],
-    transform: {
-      "^.+\\.jsx?$": "babel-jest", // Transforms JS and JSX files using Babel
-    },
-    moduleFileExtensions: ["js", "jsx", "json", "node"],
-  };
-  
+  testEnvironment: 'jest-environment-jsdom-sixteen', // or 'jest-environment-jsdom'
+  transformIgnorePatterns: [
+    "/node_modules/(?!(@bundled-es-modules|other-module-name)/)"
+  ],
+  transform: {
+    "^.+\\.[t|j]sx?$": "babel-jest",
+  },
+};

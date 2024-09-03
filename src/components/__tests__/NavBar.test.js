@@ -1,49 +1,48 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import NavBar from "../NavBar";
+import { BrowserRouter as Router } from 'react-router-dom';
+import { CurrentUserProvider } from "../../contexts/CurrentUserContext";
+import NavBar from '../NavBar';
 
-const mockUser = { username: "testuser", profile_image: "test.png" };
+test('renders NavBar', () => {
+    render(
+        <Router>
+            <NavBar />
+        </Router>
+    );
 
-test("renders NavBar", () => {
-  render(
-    <Router>
-      <NavBar />
-    </Router>
-  );
-
-  const signInLink = screen.getByRole("link", { name: "Sign in" });
-  expect(signInLink).toBeInTheDocument();
+    // screen.debug();
+    const signInLink = screen.getByRole('link', { name: 'SIGN IN' });
+    expect(signInLink).toBeInTheDocument();
 });
 
-test("renders link to the user profile for a logged in user", async () => {
-  render(
-    <Router>
-      <CurrentUserContext.Provider value={mockUser}>
-        <NavBar />
-      </CurrentUserContext.Provider>
-    </Router>
-  );
+test('renders link to the user profile for a logged in user', async () => {
+    render(
+        <Router>
+            <CurrentUserProvider>
+                <NavBar />
+            </CurrentUserProvider>
+        </Router>
+    );
 
-  const profileAvatar = await screen.findByText("Profile");
-  expect(profileAvatar).toBeInTheDocument();
+    const profileAvatar = await screen.findByText('PROFILE');
+    expect(profileAvatar).toBeInTheDocument();
 });
 
-test("renders Sign in and Sign up buttons again on log out", async () => {
-  render(
-    <Router>
-      <CurrentUserContext.Provider value={mockUser}>
-        <NavBar />
-      </CurrentUserContext.Provider>
-    </Router>
-  );
+test('renders SIGN IN and SIGN UP buttons again on log out', async () => {
+    render(
+        <Router>
+            <CurrentUserProvider>
+                <NavBar />
+            </CurrentUserProvider>
+        </Router>
+    );
 
-  const signOutLink = await screen.findByRole("link", { name: "Sign out" });
-  fireEvent.click(signOutLink);
+    const signOutLink = await screen.findByRole('link', { name: 'SIGN OUT' });
+    fireEvent.click(signOutLink);
+    
+    const signInLink = await screen.findByRole('link', { name: 'SIGN IN' });
+    const signUpLink = await screen.findByRole('link', { name: 'SIGN UP' });
 
-  const signInLink = await screen.findByRole("link", { name: "Sign in" });
-  const signUpLink = await screen.findByRole("link", { name: "Sign up" });
-
-  expect(signInLink).toBeInTheDocument();
-  expect(signUpLink).toBeInTheDocument();
+    expect(signInLink).toBeInTheDocument();
+    expect(signUpLink).toBeInTheDocument();
 });

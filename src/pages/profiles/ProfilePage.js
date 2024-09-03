@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import { Button, Image } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Row,
+  Image,
+  Container,
+} from "react-bootstrap";
 import Asset from "../../components/Asset";
 import PopularProfiles from "./PopularProfiles";
 import styles from "../../styles/ProfilePage.module.css";
@@ -50,7 +53,6 @@ function ProfilePage() {
         setProfilePosts(profilePosts);
         setHasLoaded(true);
       } catch (err) {
-        console.log(err);
       }
     };
     fetchData();

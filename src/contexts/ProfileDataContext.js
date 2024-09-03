@@ -69,7 +69,6 @@ export const ProfileDataProvider = ({ children }) => {
         };
     });
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -99,7 +98,6 @@ export const ProfileDataProvider = ({ children }) => {
         };
       });
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -122,7 +120,6 @@ export const ProfileDataProvider = ({ children }) => {
                 },
             }));
         } catch (err) {
-            console.log('Error in handleMount:', err);
         }
     };
     handleMount();

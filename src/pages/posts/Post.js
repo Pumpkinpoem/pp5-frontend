@@ -37,7 +37,6 @@ const Post = (props) => {
       await axiosRes.delete(`/posts/${id}/`);
       history.goBack();
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -47,7 +46,6 @@ const Post = (props) => {
       const { data: post } = await axiosReq.get(`/posts/${id}`);
       setPosts({ results: [post] });
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -57,7 +55,6 @@ const Post = (props) => {
       const { data: post } = await axiosReq.get(`/posts/${id}`);
       setPosts({ results: [post] });
     } catch (err) {
-      console.log(err);
     }
   };
 
