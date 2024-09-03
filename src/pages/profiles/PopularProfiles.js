@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { ProfileDataContext } from "../../contexts/ProfileDataContext";
 import appStyles from "../../App.module.css";
 import Asset from "../../components/Asset";
+import { useProfileData } from "../../contexts/ProfileDataContext";
 import Profile from "./Profile";
 
 const PopularProfiles = ({ mobile }) => {
-  const { popularProfiles } = useContext(ProfileDataContext);
-  const currentUser = useCurrentUser();
+  const { popularProfiles } = useProfileData();
 
   return (
     <Container

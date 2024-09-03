@@ -17,11 +17,11 @@ import appStyles from "../../App.module.css";
 import Picture from "../../assets/girl_reading_book.jpg";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
-
+import { setTokenTimestamp } from "../../utils/utils";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
-  useRedirect('loggedIn')
+  useRedirect("loggedIn");
 
   const [signInData, setSignInData] = useState({
     username: "",
@@ -37,12 +37,15 @@ function SignInForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
+      setTokenTimestamp(data);
       history.goBack();
     } catch (err) {
       if (err.response?.data) {
         setErrors(err.response.data);
       } else {
-        setErrors({ non_field_errors: ["Something went wrong. Please try again."] });
+        setErrors({
+          non_field_errors: ["Something went wrong. Please try again."],
+        });
       }
     }
   };
